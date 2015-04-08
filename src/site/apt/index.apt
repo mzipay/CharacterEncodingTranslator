@@ -1,0 +1,15 @@
+ ---
+ Introduction to Character Encoding Translator
+ ---
+ Matthew Zipay
+ ---
+
+About Character Encoding Translator
+
+ Character Encoding Translator is a bundled API and utility for translating
+ text from one character encoding to another. The API supports the ability to
+ replace unmappable characters with their XML character reference equivalents,
+ a useful feature when preparing text for use on the Web. The utility may be
+ used as a Swing GUI or as a console application.
+
+[./images/gui_mac.png] MacOS

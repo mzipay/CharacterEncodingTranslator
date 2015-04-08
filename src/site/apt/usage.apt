@@ -1,0 +1,137 @@
+ ---
+ Using the Character Encoding Translator as a GUI, console application, or API
+ ---
+ Matthew Zipay
+ ---
+
+Usage
+
+ Character Encoding Translator can be used as a {{GUI}} application, a
+ {{Console}} application, or an {{API}}.
+ 
+ Note: In the examples that appear below, the Character Encoding Translator JAR
+ is referred to <without> a version number. Released JARs will always contain
+ the version number as part of the filename.
+
+===
+
+* {GUI} application
+
+ To launch Character Encoding Translator as a GUI application, simply
+ double-click the JAR (if you have the <<<*.jar>>> extension registered to open
+ with the JRE), or run the following from a command line:
+
++--
+java -jar cetrans.jar
++--
+
+ On initialization, the Character Encoding Translator GUI will pre-select the
+ platform encoding (JRE-dependent) as the source encoding and "UTF-8" as the
+ target encoding (seen {{Screenshots}} below).
+
+ Once the application window is initialized, select the input (source) and
+ output (target) filenames. Then click the <<Translate to:>> button to perform
+ the translation.
+
+ Optionally, <select> the "Replace unmappable characters with XML character
+ references" checkbox to force Character Encoding Translator to use XML
+ character entity reference replacements for characters that cannot be
+ encoded in the target character encoding.
+ 
+ For example, the ISO-8859-1 character set has no representation for the Euro
+ currency symbol (&#8364;). Attempting to translate a source file containing
+ this character would normally cause the translation to fail. However, if
+ "Replace unmappable characters with XML character references" is <selected>,
+ the Euro character will be ignored and its XML character entity reference
+ ("&#38;#8364;") will be written to the target file instead.
+
+** {Screenshots}
+
+*** MacOS
+
+[./images/gui_mac.png] MacOS
+
+*** Windows
+
+[./images/gui_win.png] Windows
+
+* {Console} application
+
+ To launch Character Encoding Translator as a console application, provide
+ command-line arguments when running the JAR, as follows:
+
++--
+java -jar cetrans.jar [-xmlcharref] source-filename source-encoding target-filename target-encoding
++---
+
+ The <<<-xmlcharref>>> flag is optional; all other arguments are required.
+
+ If translation is successful, the console application exits with status 0
+ (zero). Any failure will cause the console application to exit with a
+ <non>-zero status.
+
+** Examples
+
+ Translate an input file from <US-ASCII> encoding to <UTF-8> encoding:
+
++--
+java -jar cetrans.jar in.txt US-ASCII out.txt UTF-8
++--
+
+ Translate an input file from <UTF-8> encoding to <ISO-8859-1> encoding,
+ replacing any unmappable characters with their XML character references in the
+ output file:
+
++--
+java -jar cetrans.jar -xmlcharref in.txt UTF-8 out.txt ISO-8859-1
++--
+
+* {API} usage
+
+ Character Encoding Translator uses the
+ {{{./apidocs/net/ninthtest/nio/charset/CharsetTranslator.html}<<<net.ninthtest.nio.charset.CharsetTranslator>>>}}
+ class to perform character encoding translations.
+
+ This class can be used from within other applications as long as the
+ <cetrans.jar> archive is on the application's CLASSPATH.
+
+** Examples
+
+ Translate an input file from <US-ASCII> encoding to <UTF-8> encoding:
+
++--
+CharsetTranslator translator = new CharsetTranslator("US-ASCII", "UTF-8");
+
+InputStream in = new FileInputStream("in.txt");
+OutputStream out = new FileOutputStream("out.txt");
+
+try {
+    translator.translate(in, out);
+} catch (IOException ex) {
+    // handle IOException
+} finally {
+    out.close();
+    in.close();
+}
++--
+
+ Translate an input file from <UTF-8> encoding to <ISO-8859-1> encoding,
+ replacing any unmappable characters with their XML character references in the
+ output file:
+
++--
+CharsetTranslator translator = new CharsetTranslator("UTF-8", "ISO-8859-1");
+translator.useXMLCharRefReplacement(true);
+
+InputStream in = new FileInputStream("in.txt");
+OutputStream out = new FileOutputStream("out.txt");
+
+try {
+    translator.translate(in, out);
+} catch (IOException ex) {
+    // handle IOException
+} finally {
+    out.close();
+    in.close();
+}
++--
