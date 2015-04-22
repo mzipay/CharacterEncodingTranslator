@@ -1,0 +1,32 @@
+ ---
+ Download the latest version of Character Encoding Translator
+ ---
+ Matthew Zipay
+ ---
+
+Source
+
+ If you'd like to build from source or run the unit tests, clone or fork the
+ latest version from the
+ {{{https://github.com/mzipay/CharacterEncodingTranslator}mzipay/CharacterEncodingTranslator}}
+ GitHub repository:
+
++--
+$ git clone --branch ${project.version} --depth 1 https://github.com/mzipay/CharacterEncodingTranslator
++--
+
+ Alternatively, download and extract a <.zip> or <.tar.gz> release archive from
+ {{{https://github.com/mzipay/CharacterEncodingTranslator/releases}CharacterEncodingTranslator/releases}}.
+
+ Build the JAR with {{{https://maven.apache.org/}Maven}}:
+
++--
+$ cd CharacterEncodingTranslator
+$ mvn package
++--
+
+Binary
+
+ Packaged JARs are also available for download from
+ {{{https://sourceforge.net/projects/character-encoding-translator/files/}SourceForge}}.
+ 
